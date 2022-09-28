@@ -1,0 +1,13 @@
+---
+- name: Config uptimedc
+  hosts: test
+  vars_files:
+    - vars/main.yml
+
+  tasks:
+# update system operation
+    - ansible.builtin.include_tasks: tasks/update_os.yml
+# install openjdk
+    - ansible.builtin.include_tasks: tasks/install_openjdk.yml
+# add new volume for app UptimeDC
+    - ansible.builtin.include_tasks: tasks/new_volume.yml
