@@ -1,0 +1,35 @@
+---
+# Copy package with app
+path_package_app: ../files/install
+path_directory_on_server_package_app: /opt/
+
+# Script for online backup
+path_package_script_backup_online: ../files/backup_online
+
+# Logical volume
+name_lv: UptimeDC
+path_name_lv: /opt/
+path_directory_uptimedc: "{{ path_name_lv }}/{{ name_lv }}"
+path_mount_directory_uptimedc: /opt/ # !
+
+# systemd
+path_file_uptime_service: ../files/uptimedc_service/uptimedc.service
+path_directory_on_server: /etc/systemd/system/
+uptimedc_service: uptimedc.service
+
+# Unpackage app
+path_with_installer: /opt/ # !
+path_to_directory_for_unpackages: "{{ path_directory_uptimedc }}"
+
+# Remove package with app before unpackage
+path_to_remove_package: /opt/1 # !
+
+# Path to script stopUDC.sh
+path_to_script_stopudc: '{{ path_directory_uptimedc }}/stopUDC.sh'
+
+# Logical volume for backup
+name_lv_backup: UptimeDC_Backup
+path_name_lv_backup: /opt/ # !
+
+# file permission
+read_all_write_user_group: "664"
