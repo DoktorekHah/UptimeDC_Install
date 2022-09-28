@@ -33,3 +33,6 @@ path_name_lv_backup: /opt/ # !
 
 # file permission
 read_all_write_user_group: "664"
+
+# version openjdk
+openjdk_version: java-11-openjdk
