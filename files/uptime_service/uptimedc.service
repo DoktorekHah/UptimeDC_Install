@@ -1,0 +1,16 @@
+[Unit]
+Description= UptimeDC Software
+After=syslog.target network.target
+
+[Service]
+Type=forking
+#User=
+RemainAfterExit=yes
+ExecStart=/opt/uptime/startUDC.sh
+ExecReload=/opt/uptime/stopUDC.sh
+ExecStop=/opt/uptime/stopUDC.sh
+StandardOutput=journal
+
+[Install]
+WantedBy=multi-user.target
+Alias=uptimedc.service
