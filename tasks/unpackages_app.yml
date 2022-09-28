@@ -1,0 +1,11 @@
+---
+- name: Unpackages UptimeDC
+  ansible.builtin.unarchive:
+    src: "{{ path_with_installer }}"
+    dest: "{{ path_to_directory_for_unpackages }}"
+    remote_src: true
+
+- name: Remove package with UptimeDC
+  ansible.builtin.file:
+    path: "{{ path_to_remove_package }}"
+    state: absent

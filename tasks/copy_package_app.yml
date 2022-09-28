@@ -1,0 +1,12 @@
+---
+- name: Copy package with UptimeDC
+  ansible.builtin.copy:
+    src: "{{ path_package_app }}"
+    dest: "{{ path_directory_on_server_package_app }}"
+    mode: "{{ read_all_write_user_group }}"
+
+- name: Copy script for online backup UptimeDC
+  ansible.builtin.copy:
+    src: "{{ path_package_script_backup_online }}"
+    dest: "{{ path_directory_on_server_package_app }}"
+    mode: "{{ read_all_write_user_group }}"

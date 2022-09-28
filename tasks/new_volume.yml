@@ -1,0 +1,30 @@
+---
+- name: New logical volume
+  ansible.builtin.lvol:
+    vg: vg01
+    lv: "{{ name_lv }}"
+    size: size_lv
+  become: true
+
+- name: "Set fstype for {{ name_lv }}"
+  ansible.builtin.filesystem:
+    fstype: ext4
+    dev: "{{ path_name_lv }}"
+  become: true
+
+- name: Create directory for UptimeDC
+  ansible.builtin.file:
+    path: "{{ path_directory_uptimedc }}"
+    state: directory
+    mode: '0775'  # change magic number to variable from vars/...
+  become: true
+
+- name: "Mount {{ name_lv }}"
+  ansible.builtin.mount:
+    path: "{{ path_directory_uptimedc }}"
+    src: "{{ path_mount_directory_uptimedc }}"
+    fstype: ext4
+    opts: nodev, nosuid
+    state: mounted
+  remote_user: root
+  become: true

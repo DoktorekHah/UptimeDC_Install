@@ -1,0 +1,20 @@
+---
+- name: Clean packages
+  ansible.builtin.command: yum clean all
+  changed_when: false
+
+- name: Update list with packages
+  ansible.builtin.command: yum list updates | awk '{ print $1 }'
+  changed_when: updates.stdout_lines | lenght > 0
+  args:
+    warn: false
+  register: updates
+
+- name: Write on display about packages
+  ansible.builtin.debug:
+    msg: "Found {{ updates.stdout_lines | lenght }} packages to be updated:\n\n{{ updates.stdout }}"
+
+- name: Install all updates
+  ansible.builtin.yum:
+    name: "*"
+    state: latest

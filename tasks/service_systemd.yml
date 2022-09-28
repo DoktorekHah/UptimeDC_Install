@@ -1,0 +1,32 @@
+---
+# - name: Stop UptimeDC
+#  ansible.builtin.command: "{{ path_to_script_stopudc }}"
+#  changed_when: false
+
+- name: Copy file uptime.service
+  ansible.builtin.copy:
+    src: "{{ path_file_uptime_service }}"
+    dest: "{{ path_directory_on_server }}"
+    mode: "{{ read_all_write_user_group }}" # change magic number to variable from vars/...
+
+- name: Stop UptimeDC
+  become: true
+  become_user: root
+  become_method: sudo
+  ansible.builtin.command: "{{ path_to_script_stopudc }} " # /opt/uptimedc/bin/stopped.sh
+  changed_when: false
+  notify:
+    - Reload setting in systemd
+    - Enable service UptimeDC
+    - Start service UptimeDC
+
+- name: Make sure handlers are flushed
+  ansible.builtin.meta: flush_handlers
+
+- name: Check status UptimeDC service
+  ansible.builtin.service_facts:
+  register: service_state
+
+- name: Print on display status service UptimeDC
+  ansible.builtin.debug:
+    var: "service_state.ansible_facts.services[' {{ uptimedc_service }}'].state"
