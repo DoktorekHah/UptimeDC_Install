@@ -1,5 +1,5 @@
 ---
-- name: Install "{{ openjdk_version }}"
+- name: "Install {{ openjdk_version }}"
   ansible.builtin.yum:
     name: "{{ openjdk_version }}"
     state: present
