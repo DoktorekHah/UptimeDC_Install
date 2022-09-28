@@ -1,0 +1,44 @@
+---
+- name: Reload setting in systemd
+  become: true
+  become_user: root
+  become_method: sudo
+  ansible.builtin.systemd:
+    daemon_reload: true
+  # listen: "configured_service_uptimedc"
+
+- name: Enable service UptimeDC
+  become: true
+  become_user: root
+  become_method: sudo
+  ansible.builtin.systemd:
+    name: "{{ uptimedc_service }}"
+    enabled: true
+  # listen: "configured_service_uptimedc"
+
+- name: Start service UptimeDC
+  become: true
+  become_user: root
+  become_method: sudo
+  ansible.builtin.systemd:
+    name: "{{ uptimedc_service }}"
+    state: started
+  # listen: "configured_service_uptimedc"
+
+- name: Stop service UptimeDC
+  become: true
+  become_user: root
+  become_method: sudo
+  ansible.builtin.systemd:
+    name: "{{ uptimedc_service }}"
+    state: stopped
+  # listen: "??"
+
+- name: Restart service UptimeDC
+  become: true
+  become_user: root
+  become_method: sudo
+  ansible.builtin.systemd:
+    name: "{{ uptimedc_service }}"
+    state: restarted
+  # listen: "??"
